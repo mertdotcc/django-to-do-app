@@ -1,17 +1,79 @@
-<h3>To Do</h3>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-<form method='POST' action='/'>
-    {% csrf_token %}
-    {{form.title}}
-    <input type="submit" name="Create Task">
-</form>
+<style>
 
+    body{
+        background-color: #638CB8;
+    }
 
+    input::placeholder{
+        color: #D3D3D3;
+    }
 
-{% for task in tasks %}
+    .submit{
+        background-color: #6BA3E8;
+        display: block;
+        width: 540px;
+        margin-left: 10px;
+    }
+
+    .myfieldclass{
+        display: block;
+        margin-left: 10px;
+        width: 540px;
+        border-radius: 3px;
+        margin: 10px;
+        padding: 5px;
+        font-size: 1.5rem;
+    }
+
+    .center-column{
+        width: 600px;
+        margin: 100px auto;
+        padding: 20px;
+        background-color: #FFF;
+        border-radius: 3px;
+        box-shadow: 6px 2px 30px 0px rgba(0, 0, 0, 0.75);
+    }
+
+    .item-row{
+        background-color: #906ABD;
+        margin: 10px;
+        padding: 20px;
+        border-radius: 3px;
+        color: #FFF;
+        font-size: 16px;
+        box-shadow: 0px -1px 10px -4px rgba(0, 0, 0, 0.75);
+    }
+
+    .btn-danger{
+        background-color: #FFAE19;
+        border-color: #E59400;
+    }
+
+</style>
+
+<div class="center-column">
+
+    <form method='POST' action='/'>
+        {% csrf_token %}
+        {{form.title}}
+        <input class="btn btn-info submit" type="submit" name="Create Task">
+    </form>
+
     <div>
-        <a href="{% url 'update_task' task.id %}">Update</a>
-        <a href="{% url 'delete' task.id %}">Delete</a>
-        <p>{{task}}</p>
+        {% for task in tasks %}
+            <div class="item-row">
+                <a class="btn btn-info btn-sm" href="{% url 'update_task' task.id %}">Update</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'delete' task.id %}">Delete</a>
+
+                {% if task.completed == True %}
+                    <strike>{{task}}</strike>
+                {% else %}
+                    <span>{{task}}</span>
+                {% endif %}
+            </div>
+        {% endfor %}
     </div>
-{% endfor %}
+
+</div>
